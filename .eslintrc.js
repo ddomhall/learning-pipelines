@@ -1,43 +1,37 @@
 module.exports = {
   'env': {
     'node': true,
-    'commonjs': true,
-    'es2021': true
+    'es6': true
   },
-  'extends': 'eslint:recommended',
-  'overrides': [
-    {
-      'env': {
-        'node': true
-      },
-      'files': [
-        '.eslintrc.{js,cjs}'
-      ],
-      'parserOptions': {
-        'sourceType': 'script'
-      }
-    }
+  'extends': [
+    'eslint:recommended',
+    'plugin:react/recommended'
   ],
   'parserOptions': {
-    'ecmaVersion': 'latest'
+    'ecmaFeatures': {
+      'jsx': true
+    },
+    'ecmaVersion': 2018,
+    'sourceType': 'module'
   },
   'plugins': [
-    '@stylistic/js'
+    'react'
   ],
   'rules': {
-    '@stylistic/js/indent': [
+    'react/react-in-jsx-scope': 'off',
+    'indent': [
       'error',
       2
     ],
-    '@stylistic/js/linebreak-style': [
+    'linebreak-style': [
       'error',
       'unix'
     ],
-    '@stylistic/js/quotes': [
+    'quotes': [
       'error',
       'single'
     ],
-    '@stylistic/js/semi': [
+    'semi': [
       'error',
       'never'
     ],
@@ -49,6 +43,7 @@ module.exports = {
     'arrow-spacing': [
       'error', { 'before': true, 'after': true }
     ],
-    'no-console': 0
+    'no-console': 'error',
+    'react/prop-types': 0
   }
 }

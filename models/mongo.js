@@ -1,15 +1,15 @@
 const mongoose = require('mongoose')
 
 const url = process.env.MONGODB_URI
-console.log('connecting to', url)
-mongoose.set('strictQuery',false)
-mongoose.connect(url)
-  .then(result => {
-    console.log('connected to MongoDB')
-  })
-  .catch(error => {
-    console.log('error connecting to MongoDB:', error.message)
-  })
+async function connect() {
+  // eslint-disable-next-line no-console
+  console.log('connecting to', url)
+  mongoose.set('strictQuery',false)
+  // eslint-disable-next-line no-console
+  await mongoose.connect(url).catch(error => console.log('error connecting to MongoDB:', error.message))
+  // eslint-disable-next-line no-console
+  console.log('connected to MongoDB')
+}
 
 module.exports = mongoose.model('Person', new mongoose.Schema({
   name: {
@@ -33,3 +33,6 @@ module.exports = mongoose.model('Person', new mongoose.Schema({
     delete returnedObject.__v
   }
 }))
+
+connect()
+

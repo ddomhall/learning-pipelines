@@ -39,7 +39,8 @@ app.post('/api/persons', async (req, res, next) => {
       name: req.body.name,
       number: req.body.number,
     })
-    newPerson.save().then(result => res.status(201).json(newPerson)).catch(err => next(err))
+    await newPerson.save().catch(err => next(err))
+    res.status(201).json(newPerson)
   }
 })
 
@@ -47,13 +48,12 @@ app.put('/api/persons/:id', (req, res) => {
   Person.findByIdAndUpdate(req.params.id, { name: req.body.name, number: req.body.number }, { new: true, runValidators: true, context: 'query' }).then(result => res.json(result))
 })
 
-app.delete('/api/persons/:id', (req, res) => {
-  Person.findOneAndDelete(req.params.id).then(result => res.status(204).end())
+app.delete('/api/persons/:id', async (req, res) => {
+  await Person.findOneAndDelete(req.params.id)
+  res.status(204).end()
 })
 
-const errorHandler = (error, request, response, next) => {
-  console.error(error.message)
-
+const errorHandler = (error, request, response) => {
   if (error.name === 'CastError') {
     return response.status(400).send({ error: 'malformatted id' })
   } else if (error.name === 'ValidationError') {
@@ -65,4 +65,5 @@ const errorHandler = (error, request, response, next) => {
 
 app.use(errorHandler)
 
+// eslint-disable-next-line no-console
 app.listen(process.env.PORT || 3000, console.log(`listening on :${process.env.PORT || 3000}`))
