@@ -2,7 +2,7 @@ const HtmlWebPackPlugin = require("html-webpack-plugin");
 const path = require('path');
 
 module.exports = {
-  entry: "./src/index.jsx",
+  entry: "./src/main.jsx",
   output: {
     path: path.resolve(__dirname, 'dist'),
     filename: 'bundle.js',
@@ -39,7 +39,7 @@ module.exports = {
     ],
   },
   resolve: {
-    extensions: ["*", ".js", ".jsx"],
+    extensions: [".*", ".js", ".jsx"],
   },
   devServer: {
     historyApiFallback: true,
